@@ -1,5 +1,5 @@
 var request = require('request');
-var clientID = 'Se8Uit5Hd244cltskaVUpHFVXaZ6exvKVTKsKhKTH70yTlPlWoHHUR5RFsy30nV.app.rwth-aachen.de'
+var clientID = ''
 var obtainURL = 'https://oauth.campus.rwth-aachen.de/oauth2waitress/oauth2.svc/code'
 var tokenURL = 'https://oauth.campus.rwth-aachen.de/oauth2waitress/oauth2.svc/token'
 
