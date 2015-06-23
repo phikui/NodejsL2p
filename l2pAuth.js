@@ -29,8 +29,10 @@ function getTokens(device_code, callback){
       var parsed = JSON.parse(body);
       if(parsed.status == "error: authorization pending"){
           //User has not yet authorized
+          console.log(parsed.status);
       } else if (parsed.status == "error: slow down"){
           //To many requests
+          console.log(parsed.status);
       } else {
         callback(parsed);
       }
