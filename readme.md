@@ -15,37 +15,39 @@ The OAuth workflow is the following:
 2. Obtaining an OAuth access token
 3. Calling the API
 
-and optional
- * Refreshing the token
- * validating the token
- * invalidating the token
+and optionally
 
- ## Obtaining a user code
+* Refreshing the token
+* validating the token
+* invalidating the token
 
- The first thing you will have to do is to let the user authorize your application.
- For that you have to provide him with a webpage to login and authorize. To do that 
- call the `obtainUserCode(callback)` function of l2pAuth. Example:
+## Obtaining a user code
+
+The first thing you will have to do is to let the user authorize your application.
+For that you have to provide him with a web page to login and authorize. To do that 
+call the `obtainUserCode(callback)` function of l2pAuth. Example:
 
  ```javascript
 auth.obtainUserCode(function(response){console.log(response)})
  ```
 
- The `response` object stores the information sent back by the server and stores the following fields:
+The `response` object stores the information sent back by the server and stores the following fields:
 
- * `device_code` : The code of the current device, will be used in later processes
- * `user_code` : The user code for verification
- * `verification_url` : An URL to pass to the user, so that he can authorize the app
- * `expires_in` : Time when the codes will expire
- * `interval` : Polling interval to get Auth token
+* `device_code` : The code of the current device, will be used in later processes
+* `user_code` : The user code for verification
+* `verification_url` : An URL to pass to the user, so that he can authorize the app
+* `expires_in` : Time when the codes will expire
+* `interval` : Polling interval to get Auth token
 
- These are accessed in a normal javascript fashion, that is for example `response.device_code`.
+These are accessed in a normal javascript fashion, that is for example `response.device_code`.
 
- ## Obtaining OAuth tokens
- After the user has authorize the app you are ready to request an OAuth token. This is done using the
- `getTokens(device_code, callback)` function. The device code is the one from the previous step. The callback works 
- the same as before and is a response object, that in the case of two distinct errors only has the status field with value "error: authorization pending" or "error: slow down" when the user has not yet authorized the app or the polling was done too fast respectively.
+## Obtaining OAuth tokens
 
- If there was no error the response object has the following fields:
+After the user has authorize the app you are ready to request an OAuth token. This is done using the
+`getTokens(device_code, callback)` function. The device code is the one from the previous step. 
+
+The callback works the same as before and is a response object, that in the case of two distinct errors only has the status field with value "error: authorization pending" or "error: slow down" when the user has not yet authorized the app or the pollingwas done too fast respectively.
+If there was no error the response object has the following fields:
 
 * `access_token` : The access token used for the API
 * `token_type` : The type of the token (unused here but will always be "bearer")
@@ -70,6 +72,7 @@ The response will have the following fields:
 If the refresh token expired (after 6 month) you will get `"error": "authorization invalid."`
 
 ## Token validation
+
 If you wish to see if a token is valid, call the `tokenValidation(accessToken, callback)` function. The response will have the following fields:
 
 * `status`: If the request was "ok"
@@ -87,14 +90,18 @@ Here is an example of the workflow:
 ```javascript
 var auth = require("l2pAuth");
 auth.setClientID('YOURCLIENTID.app.rwth-aachen.de')
+
+//obtain user code
 auth.obtainUserCode(function(response){
 console.log(response.verification_url); //Show this url to your user
 device_code = response.device_code; //save device code
 })
 
 //...
-//The user has now verified the app
+//Make sure the user has now verified the app
+//...
 
+//get access tokens
 auth.getTokens(device_code,function(response){
     //save tokens
     acessToken = response.access_token;
