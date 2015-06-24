@@ -30,9 +30,11 @@ function getTokens(device_code, callback){
       if(parsed.status == "error: authorization pending"){
           //User has not yet authorized
           console.log(parsed.status);
+          callback(parsed);
       } else if (parsed.status == "error: slow down"){
           //To many requests
           console.log(parsed.status);
+          callback(parsed);
       } else {
         callback(parsed);
       }
@@ -77,7 +79,7 @@ request.post({url:tokenInfoURL, form: {client_id:clientID, access_token:accessTo
   });
 }
 
-function curseinfo(token,callback){
+function courseinfo(token,callback){
   var header = "Bearer "+token
   var options = {
   url: 'https://www2.elearning.rwth-aachen.de/api/courseinfo',
