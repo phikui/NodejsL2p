@@ -2,7 +2,7 @@
 
 
 # Setup
-```
+```javascript
 var auth = require("l2pAuth");
 auth.setClientID('YOURCLIENTID.app.rwth-aachen.de')
 ```
@@ -26,7 +26,7 @@ and optional
  For that you have to provide him with a webpage to login and authorize. To do that 
  call the `obtainUserCode(callback)` function of l2pAuth. Example:
 
- ```
+ ```javascript
 auth.obtainUserCode(function(response){console.log(response)})
  ```
 
