@@ -1,4 +1,10 @@
-[TOC]
+# Dependencies
+This module requires the `request` module in node. To install just do
+
+```
+npm install request
+```
+
 
 
 # Setup
